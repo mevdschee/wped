@@ -1,12 +1,7 @@
 #!/usr/bin/php
 <?php
 $url = 'http://en.wikipedia.org/w/api.php';
-
-$curl_version = curl_version();
-$curl_version = $curl_version['version'];
-$php_version = phpversion();
-
-$user_agent = 'Wped/0.1 (http://github.com/mevdschee/wped; maurits@vdschee.nl) curl/$curl_version PHP/$php_version';
+$user_agent = 'Wped/0.1 (http://github.com/mevdschee/wped) PHP-Curl';
 
 $args = $argv;
 array_shift($args);
