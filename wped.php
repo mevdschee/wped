@@ -10,6 +10,8 @@ $user_agent = 'Wped/0.1 (http://github.com/mevdschee/wped; maurits@vdschee.nl) c
 
 $args = $argv;
 array_shift($args);
+$full = (count($args) && $args[0]=='-f');
+if ($full) array_shift($args);
 $search = implode(' ',$args);
 
 if (!count($args)) die("Usage: $argv[0] [search]\n");
@@ -21,7 +23,7 @@ curl_setopt($curl, CURLOPT_USERAGENT, $user_agent);
 $arguments = array(
 		'action'=>'opensearch',
 		'search'=>$search,
-		'limit'=>10,
+		'limit'=>3,
 		'namespace'=>0,
 		'format'=>'xml'
 );
@@ -32,7 +34,6 @@ if (!$results) die("Error searching '$search'\n");
 
 $text = '';
 if ($results->Section->Item->count()>1) {
-	$i=0;
 	$text = '<h1>Search results</h1>';
 	foreach ($results->Section->Item as $item) {
 		$text.= '<h2><a href="#">'.$item->Text.'</a></h2><p>'.$item->Description.'</p>';
@@ -41,19 +42,21 @@ if ($results->Section->Item->count()>1) {
 if ($results->Section->Item->count()<1) {
 	$text = '<h1>No results found</h1>';
 }
-if ($results->Section->Item->count()==1 || $results->Section->Item->Text == ucfirst($search)) {
-	$title = (string)$results->Section->Item->Text;
-	$arguments = array('action'=>'parse','prop'=>'text','page'=>$title,'format'=>'xml');
+if ($full) {
+	if ($results->Section->Item->count()==1 || $results->Section->Item->Text == ucfirst($search)) {
+		$title = (string)$results->Section->Item->Text;
+		$arguments = array('action'=>'parse','prop'=>'text','page'=>$title,'format'=>'xml');
+		
+		curl_setopt($curl, CURLOPT_URL, $url.'?'.http_build_query($arguments));
+		$page = simplexml_load_string(curl_exec($curl));
+		
+		if (!$page) die("Error retrieving '$search'\n");
 	
-	curl_setopt($curl, CURLOPT_URL, $url.'?'.http_build_query($arguments));
-	$page = simplexml_load_string(curl_exec($curl));
-	
-	if (!$page) die("Error retrieving '$search'\n");
-
-	$attributes = $page->parse->attributes();
-	
-	$text = '<h1>'.$attributes['title'].'</h1>'.$page->parse->text;
-	$text.= '<p align="center">source: '.$results->Section->Item->Url.'</p>';
+		$attributes = $page->parse->attributes();
+		
+		$text = '<h1>'.$attributes['title'].'</h1>'.$page->parse->text;
+		$text.= '<p align="center">source: '.$results->Section->Item->Url.'</p>';
+	}
 }
 
 $elinks = trim(`which elinks`);
