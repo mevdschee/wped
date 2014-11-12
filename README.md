@@ -13,7 +13,7 @@ Wikipedia client for the command line
 ### Installation
 
 ```
-sudo apt-get install php5-curl elinks
+sudo apt-get install php5-cli php5-curl elinks
 wget https://raw.githubusercontent.com/mevdschee/wped/master/wped.php -O wped
 chmod 755 wped
 sudo mv wped /usr/bin/wped
