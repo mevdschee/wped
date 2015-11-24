@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-$url = 'http://en.wikipedia.org/w/api.php';
+$url = 'https://en.wikipedia.org/w/api.php';
 $user_agent = 'Wped/0.1 (http://github.com/mevdschee/wped) PHP-Curl';
 
 $args = $argv;
@@ -12,6 +12,7 @@ $search = implode(' ',$args);
 if (!count($args)) die("Usage: $argv[0] [search]\n");
 	
 $curl = curl_init();
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_USERAGENT, $user_agent);
 
