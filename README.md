@@ -26,4 +26,4 @@ wped [-f] [search]
 ```
 
 If your search returns only a single result you may give the optional "-f" flag 
-to retrieve the full Wikipedia document.
+to retrieve the full Wikipedia document of the first result.
