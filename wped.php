@@ -1,15 +1,27 @@
 #!/usr/bin/php
 <?php
-$url = 'https://en.wikipedia.org/w/api.php';
-$user_agent = 'Wped/0.1 (http://github.com/mevdschee/wped) PHP-Curl';
+$user_agent = 'Wped/0.2 (http://github.com/mevdschee/wped) PHP-Curl';
 
 $args = $argv;
 array_shift($args);
 $full = (count($args) && $args[0]=='-f');
 if ($full) array_shift($args);
+
+/* option -u url added for setting alternative wikis such as
+  https://fi.wikipedia.org/w/api.php or even 
+  https://fi.wiktionary.org/w/api.php
+*/
+$newurl = (count($args) && $args[0]=='-u');
+$url = 'https://en.wikipedia.org/w/api.php';
+if ($newurl) {
+	array_shift($args);
+	$url = $args[0];
+	array_shift($args);
+}
+
 $search = implode(' ',$args);
 
-if (!count($args)) die("Usage: $argv[0] [search]\n");
+if (!count($args)) die("Usage: $argv[0] [-f] [-u url] <search keyword(s)>\n");
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
