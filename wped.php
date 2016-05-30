@@ -8,7 +8,8 @@ $arg0 = substr($argv[0],strrpos($argv[0],'/')+1);
 
 $full = false;
 $site = $arg0;
-$lang = 'en';
+$lang = `locale | grep LANGUAGE | cut -d= -f2 | cut -d_ -f1`;
+$lang = strlen($lang)==2?$lang:'en';
 $url = 'https://{lang}.{domain}/w/api.php';
 
 array_shift($args);
