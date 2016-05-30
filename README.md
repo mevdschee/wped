@@ -20,6 +20,13 @@ sudo mv wped /usr/bin/wped
 sudo ln -s wped /usr/bin/wikt
 ```
 
+### Uninstallation
+
+```
+sudo rm /usr/bin/wped
+sudo rm /usr/bin/wikt
+```
+
 ### Running
 
 ```
