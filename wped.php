@@ -1,27 +1,41 @@
 #!/usr/bin/php
 <?php
-$user_agent = 'Wped/0.2 (http://github.com/mevdschee/wped) PHP-Curl';
+$user_agent = 'Wped/0.21 (http://github.com/mevdschee/wped) PHP-Curl';
+$domains = array('wped'=>'wikipedia.org','wikt'=>'wiktionary.org');
 
 $args = $argv;
-array_shift($args);
-$full = (count($args) && $args[0]=='-f');
-if ($full) array_shift($args);
+$arg0 = substr($argv[0],strrpos($argv[0],'/')+1);
 
-/* option -u url added for setting alternative wikis such as
-  https://fi.wikipedia.org/w/api.php or even 
-  https://fi.wiktionary.org/w/api.php
-*/
-$newurl = (count($args) && $args[0]=='-u');
-$url = 'https://en.wikipedia.org/w/api.php';
-if ($newurl) {
-	array_shift($args);
-	$url = $args[0];
-	array_shift($args);
+$full = false;
+$site = $arg0;
+$lang = 'en';
+$url = 'https://{lang}.{domain}/w/api.php';
+
+array_shift($args);
+while (count($args) && $args[0]) {
+	if ($args[0]=='-f') {
+		array_shift($args);
+		$full = true;
+	} elseif ($args[0]=='-s`') { 
+		array_shift($args);
+		$site = array_shift($args);
+	} elseif ($args[0]=='-l') { 
+		array_shift($args);
+		$lang = array_shift($args);
+	} elseif ($args[0]=='-u') { 
+		array_shift($args);
+		$url = array_shift($args);
+	} else {
+		break;
+	}
 }
+
+$domain = isset($domains[$site])?$domains[$site]:array_shift($domains);
+$url = str_replace(array('{lang}','{domain}'),array($lang,$domain),$url);
 
 $search = implode(' ',$args);
 
-if (!count($args)) die("Usage: $argv[0] [-f] [-u url] <search keyword(s)>\n");
+if (!count($args)) die("Usage: $argv[0] [-f] [-l lang] <search keyword(s)>\n");
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
