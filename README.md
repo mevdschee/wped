@@ -41,4 +41,4 @@ And if you ran the last line of the installation (optional) you also have a Wikt
 wikt [-f] [-l lang] [search]
 ```
 
-If your search returns only a single result you may give the optional "-f" flag to retrieve the full Wikipedia/Wiktionary document of the first result. You can override the language with a two letter code (ISO 639-1) using the "-l" flag. If you do not enter a language, then "en" is chosen by default.
+If your search returns only a single result you may give the optional "-f" flag to retrieve the full Wikipedia/Wiktionary document of the first result. You can override the language with a two letter code (ISO 639-1) using the "-l" flag. If you do not enter a language, then the system locale is chosen by default.
