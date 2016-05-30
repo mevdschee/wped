@@ -36,7 +36,7 @@ $url = str_replace(array('{lang}','{domain}'),array($lang,$domain),$url);
 
 $search = implode(' ',$args);
 
-if (!count($args)) die("Usage: $argv[0] [-f] [-l lang] <search keyword(s)>\n");
+if (!count($args)) die("Usage: $arg0 [-f] [-l lang] <search keyword(s)>\n");
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
