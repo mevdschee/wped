@@ -32,8 +32,6 @@ And if you ran the last line of the installation you also have a Wiktionary comm
 wikt [-f] [-l lang] [search]
 ```
 
-If your search returns only a single result you may give the optional "-f" flag 
-to retrieve the full Wikipedia document of the first result.
+If your search returns only a single result you may give the optional "-f" flag to retrieve the full Wikipedia document of the first result.
 
-If you do not enter a lang, then "en" is chosen by default.
-You can override this with two letter codes using the "-l" flag.
+You can override the language with a two letter code (ISO 639-1) using the "-l" flag. If you do not enter a language, then "en" is chosen by default.
