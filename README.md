@@ -1,7 +1,7 @@
 wped
 ====
 
-![screenshot](http://www.leaseweblabs.com/wp-content/uploads/2014/11/wped.png)
+![screenshot](screenshot.png)
 
 Wikipedia (and Wiktionary) client for the command line
 
